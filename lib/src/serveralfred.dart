@@ -1,3 +1,4 @@
+/*
 import 'package:alfred/alfred.dart';
 
 void main() async {
@@ -6,3 +7,4 @@ void main() async {
 
   await app.listen();
 }
+*/

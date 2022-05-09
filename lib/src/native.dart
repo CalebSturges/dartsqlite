@@ -1,8 +1,11 @@
 // native.dart
+import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:path_provider/path_provider.dart';
 import 'dart:ffi';
 import 'dart:io';
 import 'package:sqlite3/open.dart';
+import 'database.dart';
 
 void main() {
   open.overrideFor(OperatingSystem.linux, _openOnLinux);
@@ -12,7 +15,7 @@ void main() {
 
 DynamicLibrary _openOnLinux() {
   final scriptDir = File(Platform.script.toFilePath()).parent;
-  final libraryNextToScript = File('${scriptDir.path}/sqlite3.so');
+  final libraryNextToScript = File('${scriptDir.path}/sqlite3');
   return DynamicLibrary.open(libraryNextToScript.path);
 }
 
@@ -21,8 +24,6 @@ DynamicLibrary _openOnWindows() {
   final libraryNextToScript = File('${scriptDir.path}/sqlite3.dll');
   return DynamicLibrary.open(libraryNextToScript.path);
 }
-
-// _openOnWindows could be implemented similarly by opening `sqlite3.dll`
 
 SharedDatabase constructDb() {
   final db = LazyDatabase(() async {

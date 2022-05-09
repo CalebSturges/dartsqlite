@@ -1,12 +1,7 @@
-import 'package:dchisel/dchisel.dart'
-
+import 'package:dchisel/dchisel.dart';
+import 'routes/routes.dart';
 
 Future<void> main(List<String> arguments) async {
-    DChisel().serve();
-
-    DChisel().routeGet('/getsqlite/<tablename>', Request request, String tablename){
-  
-});
+  Routes().routes();
+  DChisel().serve();
 }
-
-

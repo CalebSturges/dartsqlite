@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 
 class DefaultTable extends Table {
-  IntColumn get id => integer().unique()(); // Random UInt
+  IntColumn get id => integer().unique()(); // Random UInt - n^2 max table size
   DateTimeColumn get timestamp => dateTime()(); // Record Creation time
   TextColumn get description => text()();
 }
@@ -38,17 +38,25 @@ class Signature extends DefaultTable {
 }
 
 /// Product, Category, Subcategory, ProductType, Company, Link
-/// Region and Image can be Recomemnded by Users
+/// Region and Image can be Recomemnded or Contested by Users
 class RecommendedAddition extends DefaultTable {
   TextColumn get table => text()();
   IntColumn get userid => integer()();
   TextColumn get additionreason => text()();
 }
 
+class ContestedAddition extends DefaultTable {
+  TextColumn get table => text()();
+  IntColumn get userid => integer()();
+  TextColumn get contestreason => text()();
+  TextColumn get evidencelink => text()();
+  TextColumn get evidenceimage => text()();
+}
+
 class Product extends DefaultTable {
-  IntColumn get companyid => integer()();
+  IntColumn get brandid => integer()();
   IntColumn get categoryid => integer()();
-  TextColumn get subcategoryid => integer()();
+  IntColumn get subcategoryid => integer()();
   IntColumn get producttypeid => integer().nullable()();
   IntColumn get signatureid => integer()();
 }
@@ -85,6 +93,26 @@ class ProductType extends DefaultTable {
 
 class ProductTypeRecommendation extends ProductType {
   TextColumn get description => text()();
+}
+
+class Brand extends DefaultTable {
+  IntColumn get companyid => integer()();
+  TextColumn get name => text()();
+}
+
+class BrandRecommendation extends Brand {
+  IntColumn get recommendationid => integer().unique()();
+  IntColumn get exampleproductid => integer()();
+}
+
+class Company extends DefaultTable {
+  TextColumn get name => text()();
+  TextColumn get website => text()(); //Maybe add to link table
+  BoolColumn get isstore => boolean()();
+}
+
+class CompanyRecommendation extends DefaultTable {
+  IntColumn get userid => integer()();
 }
 
 class Link extends DefaultTable {
@@ -125,11 +153,11 @@ class ImageRecommendation extends Image {
 /// OK, Message and Comment are all non-administrative user interactions
 class Interaction extends DefaultTable {
   DateTimeColumn get interactiontime => dateTime()();
-  BoolColumn get deleted => dateTime()();
+  BoolColumn get deleted => boolean()();
 }
 
 class OK extends Interaction {
-  IntColumn get okid => integer().unique()(); //Similar to likes
+  IntColumn get okid => integer().unique()(); //Similar to likes, get percent
   IntColumn get interactionid => integer().unique()();
   TextColumn get tablename => text()();
   IntColumn get foreinid => integer()();
