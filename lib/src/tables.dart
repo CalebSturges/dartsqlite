@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-class DefaultTable extends Table {
+class DefaultColumns extends Table {
   IntColumn get id => integer().unique()(); // Random UInt - n^2 max table size
   DateTimeColumn get timestamp => dateTime()(); // Record Creation time
   TextColumn get description => text()();
@@ -9,182 +9,167 @@ class DefaultTable extends Table {
 enum UserType { admin, dev, customer, member }
 
 /// User, PubKey and Signature are for administrative purposes
-class User extends DefaultTable {
-  IntColumn get rank => integer()();
-
-  ///Closer to 1 is better, must be positive
+class Users extends DefaultColumns {
+  IntColumn get rank => integer()();///Closer to 1 is better, must be positive
   TextColumn get username => text()();
   TextColumn get email => text()();
   TextColumn get xmpp => text()();
   IntColumn get type => intEnum<UserType>()();
 }
 
-class PubKey extends DefaultTable {
+class PubKeys extends DefaultColumns {
   IntColumn get rank => integer()();
   IntColumn get userid => integer()();
   TextColumn get type => text()(); //Signature Algorithm
-  BlobColumn get pubkey => blob()(); //Might Cause error on JavaScript side
+  BlobColumn get publicKey => blob()(); //Might Cause error on JavaScript side
 }
 
-class Signature extends DefaultTable {
-  IntColumn get pubkeyid => integer()();
-  IntColumn get foreinid => integer()();
-  TextColumn get tablename => text()();
-  DateTimeColumn get signaturetimestamp => dateTime()();
+class Signatures extends DefaultColumns {
+  IntColumn get publicKeyID => integer()();
+  IntColumn get foreignID => integer()();
+  TextColumn get foreignTableName => text()();
+  DateTimeColumn get signatureTimestamp => dateTime()();
 
-  /// signature contains both the digital signiture and pubkey
+  /// signature contains both the digital signature and public key
   BlobColumn get signature => blob()(); //Might Cause error on JavaScript side
-  BlobColumn get bytesignature => blob()();
+  BlobColumn get byteSignature => blob()();
 }
 
 /// Product, Category, Subcategory, ProductType, Company, Link
-/// Region and Image can be Recomemnded or Contested by Users
-class RecommendedAddition extends DefaultTable {
+/// Region and Image can be Recommended or Contested by Users
+class RecommendedAdditions extends DefaultColumns {
+  TextColumn get table => text()();
+  IntColumn get userID => integer()();
+  TextColumn get additionReason => text()();
+}
+
+class ContestedAdditions extends DefaultColumns {
   TextColumn get table => text()();
   IntColumn get userid => integer()();
-  TextColumn get additionreason => text()();
+  TextColumn get contestReason => text()();
+  TextColumn get evidenceLink => text()();
+  TextColumn get evidenceImage => text()();
 }
 
-class ContestedAddition extends DefaultTable {
-  TextColumn get table => text()();
-  IntColumn get userid => integer()();
-  TextColumn get contestreason => text()();
-  TextColumn get evidencelink => text()();
-  TextColumn get evidenceimage => text()();
+class Products extends DefaultColumns {
+  IntColumn get brandID => integer()();
+  IntColumn get categoryID => integer()();
+  IntColumn get subcategoryID => integer()();
+  IntColumn get productTypeID => integer().nullable()();
+  IntColumn get signatureID => integer()();
 }
 
-class Product extends DefaultTable {
-  IntColumn get brandid => integer()();
-  IntColumn get categoryid => integer()();
-  IntColumn get subcategoryid => integer()();
-  IntColumn get producttypeid => integer().nullable()();
-  IntColumn get signatureid => integer()();
+class ProductRecommendations extends Products {
+  IntColumn get recommendationID => integer()();
+  IntColumn get userID => integer()();
 }
 
-class ProductRecommendation extends Product {
-  IntColumn get recommendationid => integer()();
-  IntColumn get userid => integer()();
-}
-
-class Category extends DefaultTable {
+@DataClassName('Category')
+class Categories extends DefaultColumns {
   TextColumn get category => text().withLength(min: 4, max: 32)();
 }
 
-class CategoryRecommendation extends Category {
-  IntColumn get recommendationid => integer().unique()();
-  IntColumn get exampleproductid => integer()();
+class CategoryRecommendations extends Categories {
+  IntColumn get recommendationID => integer().unique()();
+  IntColumn get exampleProductID => integer()();
 }
 
-class Subcategory extends DefaultTable {
-  IntColumn get categoryid => integer().references(Category, #id)();
+@DataClassName('Subcategory')
+class Subcategories extends DefaultColumns {
+  IntColumn get categoryID => integer().references(Categories, #id)();
   TextColumn get subcategory => text().withLength(min: 4, max: 32)();
 }
 
-class SubcategoryRecommendation extends Subcategory {
-  IntColumn get recommendationid => integer().unique()();
-  IntColumn get exampleproductid => integer()();
+class SubcategoryRecommendation extends Subcategories {
+  IntColumn get recommendationID => integer().unique()();
+  IntColumn get exampleProductID => integer()();
 }
 
-class ProductType extends DefaultTable {
-  IntColumn get producttypeid => integer().unique()();
-  TextColumn get producttype => text().withLength(min: 4, max: 32)();
+class ProductTypes extends DefaultColumns {
+  TextColumn get productType => text().withLength(min: 4, max: 32)();
   TextColumn get description => text()();
 }
 
-class ProductTypeRecommendation extends ProductType {
-  TextColumn get description => text()();
+class ProductTypeRecommendations extends ProductTypes {
+  IntColumn get recommendationID => integer().unique()();
+  IntColumn get exampleProductID => integer()();
+  TextColumn get reason => text()();
 }
 
-class Brand extends DefaultTable {
-  IntColumn get companyid => integer()();
+class Brands extends DefaultColumns {
+  IntColumn get companyID => integer()();
   TextColumn get name => text()();
 }
 
-class BrandRecommendation extends Brand {
-  IntColumn get recommendationid => integer().unique()();
-  IntColumn get exampleproductid => integer()();
+class BrandRecommendations extends Brands {
+  IntColumn get recommendationID => integer().unique()();
+  IntColumn get exampleProductID => integer()();
 }
 
-class Company extends DefaultTable {
+@DataClassName('Company')
+class Companies extends DefaultColumns {
   TextColumn get name => text()();
   TextColumn get website => text()(); //Maybe add to link table
-  BoolColumn get isstore => boolean()();
+  BoolColumn get isStore => boolean()();
 }
 
-class CompanyRecommendation extends DefaultTable {
-  IntColumn get userid => integer()();
+class CompanyRecommendations extends Companies {
+  IntColumn get recommendationID => integer().unique()();
 }
 
-class Link extends DefaultTable {
-  TextColumn get tablename => text()();
-  IntColumn get foreinid => integer()();
-  DateTimeColumn get uploadtime => dateTime()();
+class Links extends DefaultColumns {
+  TextColumn get foreignTableName => text()();
+  IntColumn get foreignID => integer()();
+  DateTimeColumn get uploadTime => dateTime()();
   TextColumn get title => text().withLength(min: 3, max: 30)();
   TextColumn get link => text()();
-  BoolColumn get secondpartyseller => boolean()();
+  BoolColumn get secondPartySeller => boolean()();
 }
 
-class LinkRecommendation extends Link {
-  IntColumn get id => integer().autoIncrement()();
-  TextColumn get tablename => text()();
-  IntColumn get foreinid => integer()();
-  DateTimeColumn get uploadtime => dateTime()();
-  TextColumn get title => text().withLength(min: 3, max: 30)();
-  TextColumn get link => text()();
-  BoolColumn get secondpartyseller => boolean()();
+class LinkRecommendations extends Links {
+  IntColumn get recommendationID => integer().unique()();
+  TextColumn get reason => text()();
+
 }
 
-class Image extends DefaultTable {
-  IntColumn get id => integer().autoIncrement()();
-  TextColumn get tablename => text()();
-  IntColumn get foreinid => integer()();
-  DateTimeColumn get uploadtime => dateTime()();
+class Images extends DefaultColumns {
+  TextColumn get foreignTableName => text()();
+  IntColumn get foreignID => integer()();
+  DateTimeColumn get uploadTime => dateTime()();
   TextColumn get title => text().withLength(min: 3, max: 30)();
   TextColumn get content => text().named('body')();
   TextColumn get format => text()();
   BlobColumn get image => blob()();
 }
 
-class ImageRecommendation extends Image {
-  IntColumn get recid => integer().unique()();
-  BoolColumn get approvedtosyndicate => boolean()();
+class ImageRecommendations extends Images {
+  IntColumn get recommendationID => integer().unique()();
+  BoolColumn get approvedToSyndicate => boolean()();
 }
 
 /// OK, Message and Comment are all non-administrative user interactions
-class Interaction extends DefaultTable {
-  DateTimeColumn get interactiontime => dateTime()();
+class Interactions extends DefaultColumns {
+  DateTimeColumn get interactionTime => dateTime()();
   BoolColumn get deleted => boolean()();
+  IntColumn get userID => integer()();
 }
 
-class OK extends Interaction {
-  IntColumn get okid => integer().unique()(); //Similar to likes, get percent
-  IntColumn get interactionid => integer().unique()();
-  TextColumn get tablename => text()();
-  IntColumn get foreinid => integer()();
+class OKs extends Interactions {
+  IntColumn get okID => integer().unique()(); //Similar to likes, get percent
+  IntColumn get interactionID => integer().unique()();
+  TextColumn get foreignTableName => text()();
+  IntColumn get foreignID => integer()();
 }
 
-class Message extends Interaction {
-  IntColumn get messageid => integer().unique()();
+class Messages extends Interactions {
+  IntColumn get messageID => integer().unique()();
   IntColumn get sender => integer()();
-  IntColumn get recieverid => integer()();
+  IntColumn get receiverID => integer()();
   TextColumn get content => text()();
 }
 
-class Comment extends Interaction {
+class Comments extends Interactions {
   IntColumn get userid => integer().unique()();
-  IntColumn get productid => integer()();
+  IntColumn get productID => integer()();
   TextColumn get content => text().named('body')();
 }
-
-/*
-@DriftDatabase(tables: kftables)
-class SharedDatabase extends _$MyDatabase {
-  // we tell the database where to store the data with this constructor
-  SharedDatabase() : super(_openConnection());
-
-  // you should bump this number whenever you change or add a table definition.
-  // Migrations are covered later in the documentation.
-  @override
-  int get schemaVersion => 1;
-}
-*/

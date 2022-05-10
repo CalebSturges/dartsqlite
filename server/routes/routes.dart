@@ -20,9 +20,9 @@ class Routes {
     DChisel().routeGet('/getsqlite/<tablename>',
         (Request request, String tablename) {
       switch (tablename) {
-        case "A":
+        case 'Signatures':
           {
-            print("Signatures");
+            print();
           }
           break;
 
