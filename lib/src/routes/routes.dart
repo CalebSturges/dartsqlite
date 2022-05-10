@@ -1,4 +1,5 @@
 import 'package:dchisel/dchisel.dart';
+import 'package:drift/drift.dart';
 
 class Routes {
   Future<void> routes() async {
@@ -17,7 +18,39 @@ class Routes {
         password: '14091996Aa`');*/
 
     DChisel().routeGet('/getsqlite/<tablename>',
-        (Request request, String tablename) {}); // GET TABLE USERS FROM DB
+        (Request request, String tablename) {
+      switch (tablename) {
+        case "A":
+          {
+            print("Signatures");
+          }
+          break;
+
+        case "B":
+          {
+            print("Good");
+          }
+          break;
+
+        case "C":
+          {
+            print("Fair");
+          }
+          break;
+
+        case "D":
+          {
+            print("Poor");
+          }
+          break;
+
+        default:
+          {
+            print("Invalid choice");
+          }
+          break;
+      }
+    }); // GET TABLE USERS FROM DB
 
     DChisel().routeGet('/', (Request request) {
       return DChiselDB().getAll('users');
