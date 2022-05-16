@@ -29,6 +29,8 @@ class Routes {
 
     DChisel().routeGet('/getSQLite/<tableName>',
         (Request request, String tableName) async {
+            Map<String, dynamic> body = await request.body.asJson;
+            final headers = await request.headers;
       if (parameters['auth_for_query_required']){
         // try to put public key and signature in header and datetime in body
         // check if the date/signature passes and return here Error Auth Failed
@@ -38,14 +40,13 @@ class Routes {
         case 'Signatures':
           {
 
-            final body = await request.body.asJson;
-            final headers = updateType.fromJ jsonRequest["updateType"];
+
             if (parameters['full_table_return']{
 
             } else {
             // Last signature not from that user in his table
             final lastSignatureDate = body['lastSignatureDate'];
-            switch (updateType) {
+            switch (headers['updateType']) {
             case 'newSignatures':
             {
             }

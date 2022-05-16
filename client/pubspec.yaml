@@ -1,0 +1,28 @@
+name: dartsqlite
+
+description: >-
+  A library for synchronized storage written in Dart for crossplatform applications including client, server and web apps.
+
+repository: github.com/CalebSturges/sqlitesync
+
+version: 0.2.0
+
+homepage: communitychest.io
+
+environment:
+  sdk: '>=2.16.2 <3.0.0'
+
+dependencies:
+  cryptography: ^2.0.5
+  universal_io: ^2.0.4
+  drift: ^1.6.0
+  path_provider: ^2.0.9
+  path: ^1.8.1
+  requests: ^4.3.0
+
+
+dev_dependencies:
+  test: ^1.21.1
+  mockito: ^5.0.16
+  drift_dev: ^1.6.0
+  build_runner: ^2.1.10

@@ -10,7 +10,9 @@ enum UserType { admin, dev, customer, member }
 
 /// User, PubKey and Signature are for administrative purposes
 class Users extends DefaultColumns {
-  IntColumn get rank => integer()();///Closer to 1 is better, must be positive
+  IntColumn get rank => integer()();
+
+  ///Closer to 1 is better, must be positive
   TextColumn get username => text()();
   TextColumn get email => text()();
   TextColumn get xmpp => text()();
@@ -19,9 +21,28 @@ class Users extends DefaultColumns {
 
 class PubKeys extends DefaultColumns {
   IntColumn get rank => integer()();
-  IntColumn get userid => integer()();
-  TextColumn get type => text()(); //Signature Algorithm
+  IntColumn get userID => integer()();
+  IntColumn get rankForUser => integer()(); //Higher is better
+  TextColumn get authType => text().withDefault(const Constant('Ed25519'))();
+
+  ///Signature Algorithm
   BlobColumn get publicKey => blob()(); //Might Cause error on JavaScript side
+}
+
+/// Similar to protonmail but for asymmetric authentication not asymmetric
+/// encryption the private key is encrypted client side and stored on the server
+/// all
+class EncryptedPrivateKeys extends DefaultColumns {
+  IntColumn get userID => integer()();
+  TextColumn get authType => text().withDefault(const Constant('Ed25519'))();
+
+  ///Signature Algorithm
+  TextColumn get encryptionType =>
+      text().withDefault(const Constant('AES-256'))();
+
+  ///Encryption Algorithm
+  BlobColumn get encryptedPrivateKey =>
+      blob()(); //Might Cause error on JavaScript side
 }
 
 class Signatures extends DefaultColumns {
@@ -129,7 +150,6 @@ class Links extends DefaultColumns {
 class LinkRecommendations extends Links {
   IntColumn get recommendationID => integer().unique()();
   TextColumn get reason => text()();
-
 }
 
 class Images extends DefaultColumns {
