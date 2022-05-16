@@ -5,18 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71b037ed-8672-4869-835e-e8eb10659f9e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.dart_tool/build/fcd1995bc647fb959e82ea360c6c2c9a/asset_graph.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/build/fcd1995bc647fb959e82ea360c6c2c9a/asset_graph.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/build/generated/dartsqlite/lib/database.moor.g.part" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/build/generated/dartsqlite/lib/database.moor.g.part" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/database.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/database.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/database.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/database.g.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/routes/routes.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/serveralfred.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/serverdchisel.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/sqlitesync.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/tables.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/tables.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/lib/routes/parameters.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqlitesync.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqlitesync.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/unsupported.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/unsupported.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/routes/routes.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/serveralfred.dart" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/serveralfred.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/serverdchisel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/serverdchisel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/serverdrift.dart" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/serverdrift.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +41,13 @@
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\aenea\Documents\GitHub\sqlitesync\server" />
+      <recent name="C:\Users\aenea\Documents\GitHub\sqlitesync\server\lib" />
+      <recent name="C:\Users\aenea\Documents\GitHub\sqlitesync\server\routes" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -52,5 +58,16 @@
       <updated>1652145254191</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

@@ -1,0 +1,2 @@
+auth_for_query_required: True
+full_table_return: True

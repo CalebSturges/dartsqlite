@@ -1,8 +1,14 @@
 import 'package:dchisel/dchisel.dart';
 import 'package:drift/drift.dart';
+import 'package:universal_io/io.dart';
+import 'package:yaml/yaml.dart';
+
 
 class Routes {
+  final parameterFile = File('parameters.yaml');
   Future<void> routes() async {
+    String yamlString = parameterFile.readAsStringSync();
+    Map parameters = loadYaml(yamlString);
     /*DChiselDB().configDB('postgre',
         host: 'localhost',
         db: 'dart_test',
@@ -17,18 +23,44 @@ class Routes {
         username: 'root',
         password: '14091996Aa`');*/
 
-    DChisel().routeGet('/getsqlite/<tablename>',
-        (Request request, String tablename) {
-      switch (tablename) {
+    DChisel().routeGet('/getParameters/', (Request request) {
+      return yamlString;
+    });
+
+    DChisel().routeGet('/getSQLite/<tableName>',
+        (Request request, String tableName) async {
+      if (parameters['auth_for_query_required']){
+        // try to put public key and signature in header and datetime in body
+        // check if the date/signature passes and return here Error Auth Failed
+      }
+      switch (tableName) {
+
         case 'Signatures':
           {
-            print();
+
+            final body = await request.body.asJson;
+            final headers = updateType.fromJ jsonRequest["updateType"];
+            if (parameters['full_table_return']{
+
+            } else {
+            // Last signature not from that user in his table
+            final lastSignatureDate = body['lastSignatureDate'];
+            switch (updateType) {
+            case 'newSignatures':
+            {
+            }
+
+            }
+                            break;
+            }
+
+            print('Signatures');
           }
           break;
 
-        case "B":
+        case "Products":
           {
-            print("Good");
+            print("Products");
           }
           break;
 
@@ -68,7 +100,9 @@ class Routes {
     }); // GET ONE DATA USERS FROM DB EITH FILTER BY NAME
 
     DChisel().routePost('/users/add', (Request request) async {
-      return DChiselDB().create('users', data: await request.body.asJson);
+      var headers = await request.headers;
+      var body = await request.headers;
+      return DChiselDB().create('users', data: body);
     }); // CREATE NEW USERS
 
     DChisel().routeDelete('/users/<id>', (Request request, String id) {

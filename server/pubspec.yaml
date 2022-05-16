@@ -1,0 +1,38 @@
+name: sqlitesync_server
+description: A server for a crossplatform synchronized sqlite database.
+publish_to: 'none'
+
+repository: github.com/CalebSturges/sqlitesync/server
+
+version: 0.1.0
+
+enveironment:
+    sdk: ">=2.16.2 <3.0.0"
+
+dependencies:
+    sqlitesync:
+    cryptography: ^2.0.5
+    universal_io: ^2.0.4
+    drift: ^1.6.0
+    path_provider: ^2.0.9
+    path: ^1.8.1
+    dchisel: ^1.0.4
+    sqlite3: ^1.7.0
+
+dev_dependencies:
+    build_runner: ^2.1.10
+    # We use this to compile the shared web worker for the web database. This dependency
+    # isn't required for most apps. You only need it if you want to target the web, use
+    # web workers for drift AND want to compile those web workers through `build_runner`.
+    # Either way, using this package with Flutter requires a delicate setup described in
+    # `build.yaml`.
+    build_web_compilers: ^3.2.2
+    build: ^2.2.1
+    drift_dev: ^1.6.0
+
+# We override dependencies to ensure that we always use the packages from
+# this repository. In your app, just depend on the latest drift version.
+dependency_overrides:
+    sqlitesync:
+        path: ../../sqlitesync
+    drift_dev: ^1.6.0
